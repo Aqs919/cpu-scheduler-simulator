@@ -160,10 +160,18 @@ timelineBar.style.width = `${ganttChartPixelWidth}px`;
              jobBlock.style.width = `${segmentWidth}px`;
              jobBlock.style.minWidth = '5px';
 
-             const jobIdNumber = segment.jobId.replace('Job ', '');
-             // Display Job ID (P#) above and the end time of the segment below
+             // Fix label for Idle
+             let label = '';
+             if (segment.jobId === 'Idle') {
+                 label = `<span class="block-label">Idle</span>`;
+             } else {
+                 const jobIdNumber = segment.jobId.replace('Job ', '');
+                 label = `<span class="block-label">P${jobIdNumber}</span>`;
+             }
+
+             // Display Job ID (P#) or Idle above and the end time of the segment below
              jobBlock.innerHTML = `
-                 <span class="block-label">P${jobIdNumber}</span>
+                 ${label}
                  <span class="block-time">${segmentEndTime}</span>
              `;
 
