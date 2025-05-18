@@ -163,7 +163,7 @@ timelineBar.style.width = `${ganttChartPixelWidth}px`;
              // Fix label for Idle
              let label = '';
              if (segment.jobId === 'Idle') {
-                 label = `<span class="block-label">Idle</span>`;
+                 label = `<span class="block-label">I</span>`;
              } else {
                  const jobIdNumber = segment.jobId.replace('Job ', '');
                  label = `<span class="block-label">P${jobIdNumber}</span>`;
