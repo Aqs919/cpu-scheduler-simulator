@@ -61,9 +61,7 @@ min-width: 20px; /* Ensure a minimum visible width */
 }
 
 /* Specific styling for Job blocks */
-.gantt-job-block {
 /* Background color set by JS in ganttRenderer.js */
-}
 
 /* --- Added Styling for Idle Blocks --- */
 .gantt-idle-block {
@@ -127,4 +125,19 @@ padding: 5px 8px; /* Example padding */
 border: 1px solid #555; /* Example border */
 border-radius: 4px; /* Example border radius */
 background-color: #555; /* Example background color */
+}
+
+/* --- Tooltip Styling --- */
+#gantt-tooltip {
+position: absolute;
+background: #222;
+color: #fff;
+padding: 6px 12px;
+border-radius: 6px;
+font-size: 13px;
+pointer-events: none;
+box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+white-space: nowrap;
+display: none;
+z-index: 1000;
 }
