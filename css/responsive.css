@@ -1,0 +1,61 @@
+/* Responsive design for mobile devices */
+@media (max-width: 600px) {
+  body {
+    padding-top: 50px;
+    font-size: 15px;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 0;
+  }
+  .navbar-actions {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .selector-content,
+  .metrics-container {
+    flex-direction: column !important;
+    gap: 12px;
+    width: 100%;
+  }
+  .gantt-chart-section,
+  .metrics-container,
+  .job-input-section,
+  .timeline-section {
+    width: 98% !important;
+    min-width: 0;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  .timeline-bar,
+  .gantt-chart-bar {
+    overflow-x: auto;
+    width: 100% !important;
+    min-width: 0;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    min-width: 350px;
+  }
+  th, td {
+    font-size: 14px;
+    padding: 6px 4px;
+  }
+  .selector-label {
+    font-size: 16px;
+  }
+  .timeline-label {
+    font-size: 16px;
+  }
+  .metrics-section {
+    font-size: 15px;
+  }
+  button, input, select {
+    font-size: 15px !important;
+  }
+}

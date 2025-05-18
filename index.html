@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPU Scheduler</title>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/selector.css">
+    <link rel="stylesheet" href="css/job_input.css">
+    <link rel="stylesheet" href="css/gantt.css">
+    <link rel="stylesheet" href="css/metrics.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic body styling for overall layout */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Default Dark background */
+            color: white;
+            margin: 0;
+            padding-top: 65px; /* Add padding to account for fixed navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            min-height: 100vh;
+            /* Added transition for smooth background color change */
+            transition: background-color 0.5s ease; /* Adjust time and ease as needed */
+        }
+
+        /* --- Algorithm Theme Background Colors --- */
+        /* These classes will be added to the body element by JavaScript */
+        body.theme-fcfs {
+            background-color: #2e86de; /* Blue */
+        }
+        body.theme-sjf {
+            background-color: #e74c3c; /* Red */
+        }
+        body.theme-npp {
+            background-color: #f1c40f; /* Yellow */
+        }
+        body.theme-pp {
+            background-color: #27ae60; /* Green */
+        }
+         /* Note: Default body background #333 is the fallback when no theme class is present */
+
+
+        /* Main container for the content below the navbar */
+        /* Adjusted margin-top to account for the selector now being inside */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Two columns: left for job input/timeline/selector, right for gantt/metrics */
+            gap: 30px; /* Space between columns */
+            width: 95%; /* Use a percentage width for responsiveness */
+            max-width: 1200px; /* Maximum width */
+            margin-top: 20px; /* Keep some space below the navbar */
+            padding: 0 20px; /* Add some horizontal padding */
+        }
+
+        /* Left column container */
+        /* Added gap for spacing between the selector, job input, and timeline */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Space between selector, job input and timeline */
+             /* Removed stretching related CSS like min-width: 0; */
+        }
+
+        /* Right column container */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Space between gantt chart and metrics */
+             /* Removed stretching related CSS like min-width: 0; */
+        }
+
+        /* Container for metrics (Turn-Around Time and Waiting Time) */
+        .metrics-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for TT and WT */
+            gap: 20px; /* Space between TT and WT sections */
+            /* Removed stretching related CSS like align-items: start; */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+                padding: 0 10px;
+            }
+            .metrics-container {
+                 grid-template-columns: 1fr; /* Stack metrics on smaller screens */
+            }
+        }
+
+         /* Add CSS for selected algorithm button */
+        .selector-content .algo-btn.selected-algo {
+            outline: 2px solid white; /* Example highlight */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Example glow */
+             /* Background and text color are set by JS using inline styles */
+        }
+
+         /* Add CSS for text color change based on selected algorithm */
+         /* These selectors are targeted by JS applying inline 'color' styles */
+         /* Make sure these elements have a default color defined in your CSS (e.g., in style.css) */
+         /* Example in style.css: color: white; transition: color 0.3s ease; */
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="navbar-actions">
+            <button id="refresh-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 0 0-4.546 2.914.5.5 0 0 1-.9.436A6 6 0 1 1 8 14a6 6 0 0 0-4.306-1.781.5.5 0 0 1-.164-.92L4.306 11A5 5 0 1 1 8 3"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                </svg>
+                Refresh
+            </button>
+            <button id="help-btn">HELP</button>
+        </div>
+
+         <div class="navbar-right-actions">
+             <div class="number-of-jobs">
+                 Number of Jobs: <input type="number" id="num-jobs" min="1" value="5">
+             </div>
+             <button id="execute-btn">Execute</button>
+         </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left-column">
+             <div class="selector-wrapper">
+                <div class="selector-label">Select Scheduling <strong>Algorithm</strong></div>
+                <div class="selector-bar">
+                    <div class="selector-content">
+                        <button class="algo-btn fcfs">FCFS</button>
+                        <button class="algo-btn sjf">SJF</button>
+                        <button class="algo-btn npp">NPP</button>
+                        <button class="algo-btn pp">PP</button>
+                        <div class="mini-bars">
+                            <div class="bar fcfs"></div>
+                            <div class="bar sjf"></div>
+                            <div class="bar npp"></div>
+                            <div class="bar pp"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="job-input-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>JOB</th>
+                            <th>AT</th>
+                            <th>BT</th>
+                            <th>P</th>
+                        </tr>
+                    </thead>
+                    <tbody id="job-table-body">
+                         </tbody>
+                </table>
+            </div>
+
+            <div class="timeline-section">
+                <div class="timeline-label">TIMELINE</div>
+                <div class="timeline-bar">
+                    <!-- timeline markers go here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="gantt-chart-section">
+                <div class="gantt-chart-label">GANTT CHART</div>
+                <div class="gantt-chart-bar">
+                     </div>
+            </div>
+
+            <div class="metrics-container">
+                <div class="turnaround-time-section">
+                    <div class="metric-label">TURN-AROUND TIME</div>
+                    <div class="metric-values">
+                         </div>
+                     <div class="metric-average">
+                        tt average: <span id="tt-average">?</span>
+                    </div>
+                </div>
+
+                <div class="waiting-time-section">
+                     <div class="metric-label">WAITING TIME</div>
+                    <div class="metric-values">
+                         </div>
+                     <div class="metric-average">
+                        wt average: <span id="wt-average">?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cpu-utilization-section">
+                <div class="metric-label">CPU UTILIZATION</div>
+                 <div id="cpu-utilization-computation" class="metric-computation"></div>
+                <div class="cpu-utilization-bar-container">
+                    <div class="cpu-utilization-bar">
+                         </div>
+                </div>
+                 <div class="cpu-utilization-value">
+                    <span id="cpu-utilization-percentage">?</span> %
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js" type="module"></script>
+
+</body>
+</html>

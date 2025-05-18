@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduler Help</title>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic styling for the help page content */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #333; /* Dark background */
+            color: white;
+            margin: 0;
+            padding-top: 80px; /* Space for fixed navbar */
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .help-container {
+            background-color: #444;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .help-container h1,
+        .help-container h2 {
+            color: #f1c40f; /* Highlight color */
+            margin-top: 20px; /* Add space above section headings */
+             margin-bottom: 10px;
+        }
+
+         .help-container h1:first-child {
+             margin-top: 0; /* No top margin for the very first h1 */
+         }
+
+
+        .help-container p {
+            margin-bottom: 15px;
+        }
+
+        .help-container ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .help-container li {
+            margin-bottom: 8px;
+        }
+
+         .help-container strong {
+             color: #ccc; /* Slightly lighter color for strong text */
+         }
+
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #5f5f5f;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="navbar-actions">
+            <button id="refresh-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 0 0-4.546 2.914.5.5 0 0 1-.9.436A6 6 0 1 1 8 14a6 6 0 0 0-4.306-1.781.5.5 0 0 1-.164-.92L4.306 11A5 5 0 1 1 8 3"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                </svg>
+                Refresh
+            </button>
+            <button id="help-btn">HELP</button>
+        </div>
+         <div class="navbar-right-actions">
+             <div class="number-of-jobs">
+                 Number of Jobs: <input type="number" id="num-jobs" min="1" value="5">
+             </div>
+             <button id="execute-btn">Execute</button>
+         </div>
+    </div>
+
+    <div class="help-container">
+        <h1>How to Use the CPU Scheduler</h1>
+
+        <p>Welcome to the CPU Scheduling Algorithm Visualizer! This tool helps you understand how different scheduling algorithms work by simulating their execution on a set of jobs.</p>
+
+        <h2>Sections:</h2>
+        <ul>
+            <li><strong>Select Scheduling Algorithm:</strong> Choose one of the available algorithms (FCFS, SJF, NPP, PP) to see how it schedules the jobs.</li>
+            <li><strong>Number of Jobs:</strong> Specify how many jobs you want to simulate. The input table will update accordingly.</li>
+            <li><strong>Job Input Table (JOB, AT, BT, P):</strong>
+                <ul>
+                    <li><strong>JOB:</strong> Job identifier (P#).</li>
+                    <li><strong>AT (Arrival Time):</strong> The time the job becomes available.</li>
+                    <li><strong>BT (Burst Time):</strong> The time the job needs to run on the CPU.</li>
+                    <li><strong>P (Priority):</strong> The priority level (used by Priority algorithms). Lower numbers typically mean higher priority.</li>
+                </ul>
+                Enter the details for each job here.
+            </li>
+            <li><strong>Execute Button:</strong> Click this button to run the simulation based on the selected algorithm and job details.</li>
+            <li><strong>Gantt Chart:</strong> This visual bar shows the order and time each job runs on the CPU.</li>
+            <li><strong>Timeline:</strong> A scale indicating time units, aligned with the Gantt chart.</li>
+            <li><strong>Turn-Around Time (TT):</strong> The total time from a job's arrival until its completion. Calculated as: Completion Time - Arrival Time. Individual job TT and the average TT are displayed.</li>
+            <li><strong>Waiting Time (WT):</strong> The total time a job spends waiting in the ready queue. Calculated as: Turn-Around Time - Burst Time. Individual job WT and the average WT are displayed.</li>
+             <li><strong>CPU Utilization:</strong> Shows the percentage of time the CPU is busy processing jobs.</li>
+        </ul>
+
+        <h2>How to Run a Simulation:</h2>
+        <ol>
+            <li>Enter the desired number of jobs and their details (AT, BT, P) in the input table.</li>
+            <li>Select a scheduling algorithm by clicking one of the algorithm buttons (FCFS, SJF, NPP, or PP).</li>
+            <li>Click the "Execute" button.</li>
+        </ol>
+
+        <p>The Gantt chart, timeline, and performance metrics (Turn-Around Time, Waiting Time, and CPU Utilization) will be displayed based on the simulation results.</p>
+
+        <hr style="border-color:#555; margin: 30px 0;"> <h2>Scheduling Algorithms Explained:</h2>
+
+        <p>Understand how each algorithm decides which job runs next:</p>
+
+        <h3>First-Come, First-Served (FCFS)</h3>
+        <p><strong>Principle:</strong> The CPU is allocated to the job that requests it first.</p>
+        <ul>
+            <li>Jobs are processed strictly in the order they arrive.</li>
+            <li>It is non-preemptive (once a job starts, it runs to completion).</li>
+            <li>Simple to understand and implement.</li>
+        </ul>
+
+        <h3>Shortest Job First (SJF)</h3>
+        <p><strong>Principle:</strong> The CPU is allocated to the job with the smallest burst time among the jobs that have arrived.</p>
+        <p>This visualizer implements the <strong>Non-Preemptive SJF</strong> version:</p>
+        <ul>
+            <li>Once a job starts, it runs until it completes its burst time.</li>
+            <li>If multiple jobs arrive at the same time, the one with the shortest burst time goes first.</li>
+            <li>Provides the minimum average waiting time for a given set of jobs.</li>
+        </ul>
+
+        <h3>Non-Preemptive Priority (NPP)</h3>
+        <p><strong>Principle:</strong> The CPU is allocated to the job with the highest priority among the jobs that have arrived.</p>
+        <ul>
+            <li>Priorities are assigned to jobs (a lower number usually indicates a higher priority).</li>
+            <li>It is non-preemptive (once a job starts, it runs to completion, even if a higher-priority job arrives).</li>
+            <li>If multiple jobs have the same highest priority, they are typically scheduled using FCFS.</li>
+        </ul>
+
+        <h3>Preemptive Priority (PP)</h3>
+        <p><strong>Principle:</strong> The CPU is allocated to the job with the highest priority, and the currently running job can be interrupted (preempted) if a higher-priority job arrives.</p>
+        <ul>
+            <li>Priorities are assigned to jobs (a lower number usually indicates a higher priority).</li>
+            <li>If a job with a higher priority than the currently running job arrives, the running job is stopped and moved back to the ready queue, and the higher-priority job is started.</li>
+            <li>Can lead to starvation for low-priority jobs if high-priority jobs continuously arrive.</li>
+            <li>If multiple jobs have the same highest priority, they are typically scheduled using FCFS.</li>
+        </ul>
+
+
+        <a href="index.html" class="back-button">Back to Scheduler</a>
+    </div>
+
+    </body>
+</html>

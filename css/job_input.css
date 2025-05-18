@@ -1,0 +1,158 @@
+/* Styling for the "Number of Jobs" input */
+.number-of-jobs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white; /* Text color */
+    font-weight: bold;
+    padding-right: 0;
+}
+
+.number-of-jobs input[type="number"] {
+    padding: 5px;
+    border: 1px solid #555;
+    background-color: #444;
+    color: white;
+    border-radius: 4px;
+    width: 60px; /* Adjust width as needed */
+}
+
+/* Styling for the Job Input Table section */
+.job-input-section {
+    background-color: #444; /* Darker background for the section */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* Removed display: flex and flex-direction: column */
+    /* Removed overflow: hidden */
+}
+
+.job-input-section table {
+    width: 100%; /* Table takes full width of its container */
+    border-collapse: collapse; /* Remove space between borders */
+    /* Removed height: 1px */
+    /* Removed table-layout: fixed */
+}
+
+.job-input-section thead {
+    /* Removed display: table-header-group */
+    /* Removed width calculation for scrollbar */
+    /* Removed box-sizing */
+}
+
+.job-input-section tbody {
+    /* Removed display: block */
+    /* Removed max-height */
+    /* Removed overflow-y: auto */
+    /* Removed width: 100% */
+    /* Removed box-sizing */
+    padding-right: 0;
+}
+
+.job-input-section th,
+.job-input-section td {
+    padding: 12px 15px; /* Padding inside cells */
+    text-align: left;
+    border-bottom: 1px solid #555; /* Separator line */
+    box-sizing: border-box; /* Keep box-sizing for padding/border calculation */
+    /* Removed white-space, overflow, text-overflow if you want content to wrap */
+    /* Removed explicit widths */
+    width: auto; /* Allow browser to determine width */
+    white-space: nowrap; /* Keep nowrap to prevent wrapping in cells for consistent width */
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+/* Removed explicit widths for each column using :nth-child */
+/* Let browser handle column widths */
+
+
+.job-input-section th {
+    background-color: #555; /* Slightly lighter background for headers */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    /* Removed position: sticky, top, z-index */
+    background-color: #555; /* Keep background color */
+}
+
+.job-input-section th:nth-child(n+2) {
+    text-align: center;
+}
+
+.job-input-section td {
+    color: #ddd; /* Lighter text color for data */
+}
+
+/* Remove bottom border for the last row */
+.job-input-section tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Styling for input fields within the table */
+.job-input-section td input[type="number"] {
+    width: 100%; /* Make inputs take full width of their cell */
+    padding: 8px 0; /* Remove horizontal padding from input, keep vertical */
+    border: 1px solid #666;
+    background-color: #555;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    -moz-appearance: textfield;
+    box-sizing: border-box;
+    margin: 0;
+    display: inline-block; /* or block */
+    height: auto;
+}
+
+/* Add focus style to inputs to make them clearly interactive */
+.job-input-section td input[type="number"]:focus {
+    outline: none;
+    border-color: #f1c40f;
+    box-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+    background-color: #666;
+}
+
+
+/* Hide default number input arrows */
+.job-input-section td input[type="number"]::-webkit-outer-spin-button,
+.job-input-section td input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Styling for the Timeline section */
+.timeline-section {
+     background-color: #444; /* Darker background for the section */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0 0 0 / 30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.timeline-bar {
+    width: 95%;
+    height: 10px;
+    background-color: #666;
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.timeline-marker {
+    position: absolute;
+    top: 15px;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #ccc;
+}

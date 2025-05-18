@@ -1,0 +1,114 @@
+/* Styling for the Metrics Containers */
+.metrics-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for TT and WT */
+    gap: 20px; /* Space between TT and WT sections */
+    /* Ensure metrics sections are not cut off if they expand */
+    align-items: start; /* Align items to the start so expanding sections don't push others down unevenly */
+}
+
+/* Styling for individual Metric Sections (Turn-Around Time, Waiting Time) */
+.turnaround-time-section,
+.waiting-time-section {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    gap: 15px; /* Space between label, values, and average */
+}
+
+.metric-label {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center; /* Center the labels */
+}
+
+/* Container for the individual metric values (tt1=..., wt1=...) */
+.metric-values {
+    display: flex;
+    flex-direction: column; /* Stack individual metric rows vertically */
+    gap: 8px; /* Space between each metric row */
+     /* Add some padding if needed */
+     padding: 5px 0;
+}
+
+/* Styling for each individual metric row (tt1=..., wt1=...) */
+.metric-row {
+    justify-content: center;
+    display: flex;
+    align-items: center; /* Vertically align the text and input */
+    color: #ddd;
+    font-size: 14px;
+}
+
+.metric-row input[type="text"] {
+    margin-left: 5px; /* Space between the label and input */
+    padding: 5px;
+    border: 1px solid #666;
+    background-color: #555;
+    color: white;
+    border-radius: 4px;
+    width: 60px; /* Adjust width as needed */
+    text-align: center;
+    cursor: default; /* Indicate it's not editable */
+}
+
+.metric-average {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-align: center; /* Center the average text */
+    margin-top: 10px; /* Add space above the average */
+}
+
+.metric-average span {
+    color: #f1c40f; /* Highlight color for the average value */
+}
+
+/* Styling for the CPU Utilization section */
+.cpu-utilization-section {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center elements */
+    gap: 15px; /* Space between label, bar, and value */
+}
+
+.cpu-utilization-bar-container {
+    width: 95%; /* Container takes most of the width */
+    height: 20px; /* Height of the bar container */
+    background-color: #666; /* Background for the empty part of the bar */
+    border-radius: 10px;
+    overflow: hidden; /* Hide overflowing bar */
+}
+
+.cpu-utilization-bar {
+    height: 100%;
+    width: 0%; /* Initial width - will be set by JS */
+    background-color: #2ecc71; /* Color for the filled part of the bar (Green) */
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out; /* Smooth transition for width change */
+}
+
+.cpu-utilization-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.cpu-utilization-value span {
+    color: #f1c40f; /* Highlight color for the percentage value */
+}
+
+/* Responsive adjustments (already in index.html, but good to keep related styles together) */
+/* @media (max-width: 768px) {
+    .metrics-container {
+        grid-template-columns: 1fr; // Stack metrics on smaller screens
+    }
+} */

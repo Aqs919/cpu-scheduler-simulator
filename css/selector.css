@@ -1,0 +1,87 @@
+.selector-wrapper {
+  /* Removed margin-top as it's now inside the left-column with its own gap */
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Removed padding-left as it will be handled by the main-content padding */
+  padding-left: 0;
+  width: 100%; /* Allow the selector to take the full width of the left column */
+  max-width: fit-content; /* Ensure it doesn't exceed its content width if needed */
+  margin-bottom: 0; /* Removed bottom margin, gap is handled by left-column */
+}
+
+/* Rectangular label */
+.selector-label {
+  background-color: #2c2c2c;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 18px;
+  display: inline-block;
+  width: fit-content;
+}
+
+/* Parallelogram bar exactly under the label */
+.selector-bar {
+  background-color: #444;
+  transform: skew(20deg);
+  margin-top: -5px;
+  /* Adjusted width to take available space, but keeping content centered */
+  width: 100%;
+   /* Added padding to the right to compensate for the skew and ensure content is visible */
+  padding: 12px 40px 12px 20px; /* top right bottom left */
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+/* Unskew the inside to restore normal layout */
+.selector-content {
+  transform: skew(-20deg);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* Center the content within the skewed bar */
+  justify-content: center;
+  width: 100%; /* Take full width of the unskewed container */
+}
+
+/* Scheduling buttons */
+.selector-content .algo-btn {
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.fcfs { background-color: #2e86de; }
+.sjf  { background-color: #e74c3c; }
+.npp  { background-color: #f1c40f; color: black; }
+.pp   { background-color: #27ae60; }
+
+.selector-content .algo-btn:hover {
+    opacity: 0.9; /* Slightly dim on hover */
+}
+
+
+/* Colored mini-bars inside the parallelogram */
+.mini-bars {
+  display: flex;
+  gap: 6px;
+  /* Adjusted margin-left */
+  margin-left: 10px;
+}
+
+.mini-bars .bar {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.mini-bars .fcfs { background-color: #2e86de; }
+.mini-bars .sjf  { background-color: #e74c3c; }
+.mini-bars .npp  { background-color: #f1c40f; }
+.mini-bars .pp   { background-color: #27ae60; }
