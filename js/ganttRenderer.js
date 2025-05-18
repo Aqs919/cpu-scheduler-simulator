@@ -3,6 +3,7 @@
 // Get references to the Gantt chart and Timeline containers
 const ganttChartBar = document.querySelector('.gantt-chart-bar');
 const timelineBar = document.querySelector('.timeline-bar');
+const tooltip = document.getElementById('gantt-tooltip');
 
 
 /**
@@ -175,6 +176,28 @@ timelineBar.style.width = `${ganttChartPixelWidth}px`;
                  <span class="block-time">${segmentEndTime}</span>
              `;
 
+             // For job blocks:
+             if (segment.jobId !== 'Idle') {
+                 const burstTime = segment.endTime - segment.startTime;
+                 jobBlock.addEventListener('mouseenter', (e) => {
+                     showTooltip(`Burst Time: ${burstTime}`, e);
+                 });
+                 jobBlock.addEventListener('mousemove', (e) => {
+                     showTooltip(`Burst Time: ${burstTime}`, e);
+                 });
+                 jobBlock.addEventListener('mouseleave', hideTooltip);
+             } else {
+                 // For idle blocks, show I(1), I(2), ... for each idle block in a merged segment
+                 const idleDuration = segment.endTime - segment.startTime;
+                 jobBlock.addEventListener('mouseenter', (e) => {
+                     showTooltip(`Idle (${idleDuration})`, e);
+                 });
+                 jobBlock.addEventListener('mousemove', (e) => {
+                     showTooltip(`Idle (${idleDuration})`, e);
+                 });
+                 jobBlock.addEventListener('mouseleave', hideTooltip);
+             }
+
              ganttChartBar.appendChild(jobBlock);
          }
 
@@ -211,4 +234,18 @@ timelineBar.style.width = `${ganttChartPixelWidth}px`;
 
 
     console.log(`Gantt chart (with idle time and end times) and Timeline rendered.`);
+}
+
+// Helper to show tooltip
+function showTooltip(text, event) {
+    tooltip.textContent = text;
+    tooltip.style.display = 'block';
+    // Position tooltip near mouse
+    tooltip.style.left = (event.pageX + 12) + 'px';
+    tooltip.style.top = (event.pageY - 24) + 'px';
+}
+
+// Helper to hide tooltip
+function hideTooltip() {
+    tooltip.style.display = 'none';
 }
